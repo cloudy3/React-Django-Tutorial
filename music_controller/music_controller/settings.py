@@ -25,7 +25,8 @@ SECRET_KEY = ')#aui=#y3)(^(2kgm*(3b@8=d3j32(9&c%152&*p&y7ab7xlu5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0']
+# Add Local IP Address if it does not work
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1']
 
 
 # Application definition
