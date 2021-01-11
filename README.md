@@ -1,7 +1,7 @@
 
 # Full Stack Web App using Spotify's API
 
-## Setup Instructions
+## _Setup Instructions_
 
 ### Install Required Python Modules
 
@@ -15,8 +15,6 @@ Run the django web server.
 ```bash
 py .\manage.py runserver
 ```
-
-### [Install Node.js](https://nodejs.org/en/)
 
 ### Install Node Modules
 
@@ -41,7 +39,7 @@ npm run dev
 ```
 
 
-## Creating the files
+## _Creating The Files_
 ```bash
 django-admin startproject <project_name>
 cd .\<project_name>\
@@ -50,13 +48,13 @@ django-admin startapp <folder_name>
 Then add app into installed apps of settings.py.
 Add 'rest_framework" into installed apps.
 
-### Making migrations
+### Making Migrations
 ```bash
 py .\manage.py makemigrations
 py .\manage.py migrate
 ```
 
-### Initialising frontend folder
+### Initialising Front-End Folder
 ```bash
 npm init -y
 npm i webpack webpack-cli --save-dev
