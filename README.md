@@ -13,7 +13,7 @@ pip install djangorestframework
 
 Run the django web server.
 ```bash
-python manage.py runserver
+py .\manage.py runserver
 ```
 
 ### [Install Node.js](https://nodejs.org/en/)
@@ -38,4 +38,32 @@ npm run build
 or for development:
 ```bash
 npm run dev
+```
+
+
+## Creating the files
+```bash
+django-admin startproject <project_name>
+cd .\<project_name>\
+django-admin startapp <folder_name>
+```
+Then add app into installed apps of settings.py.
+Add 'rest_framework" into installed apps.
+
+### Making migrations
+```bash
+py .\manage.py makemigrations
+py .\manage.py migrate
+```
+
+### Initialising frontend folder
+```bash
+npm init -y
+npm i webpack webpack-cli --save-dev
+npm i @babel/core babel-loader @babel/preset-env @babel/preset-react --save-dev
+npm i react react-dom --save-dev
+npm install @material-ui/core
+npm install @babel/plugin-proposal-class-properties
+npm install react-router-dom
+npm install @material-ui/icons
 ```
