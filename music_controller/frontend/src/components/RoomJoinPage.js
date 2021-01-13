@@ -1,77 +1,64 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { TextField, Button, Grid, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
-export default class RoomJoinPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      roomCode: "",
-      error: "",
-    };
-  }
+export default function RoomJoinPage(props) {
+  const [roomCode, setRoomCode] = useState("");
+  const [error, setError] = useState("");
 
-  render() {
-    return (
-      <Grid container spacing={1} align="center">
-        <Grid item xs={12}>
-          <Typography variant="h4" component="h4">
-            Join a Room
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            error={this.state.error}
-            label="Code"
-            placeholder="Enter a Room Code"
-            value={this.state.roomCode}
-            helperText={this.state.error}
-            variant="outlined"
-            onChange={this.handleTextFieldChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={this.roomButtonPressed}
-          >
-            Enter Room
-          </Button>
-        </Grid>
-        <Grid item xs={12}>
-          <Button variant="contained" color="secondary" to="/" component={Link}>
-            Back
-          </Button>
-        </Grid>
+  return (
+    <Grid container spacing={1} align="center">
+      <Grid item xs={12}>
+        <Typography variant="h4" component="h4">
+          Join a Room
+        </Typography>
       </Grid>
-    );
+      <Grid item xs={12}>
+        <TextField
+          error={error}
+          label="Code"
+          placeholder="Enter a Room Code"
+          value={roomCode}
+          helperText={error}
+          variant="outlined"
+          onChange={handleTextFieldChange}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <Button variant="contained" color="primary" onClick={roomButtonPressed}>
+          Enter Room
+        </Button>
+      </Grid>
+      <Grid item xs={12}>
+        <Button variant="contained" color="secondary" to="/" component={Link}>
+          Back
+        </Button>
+      </Grid>
+    </Grid>
+  );
+
+  function handleTextFieldChange(e) {
+    setRoomCode(e.target.value);
   }
 
-  handleTextFieldChange = (e) => {
-    this.setState({
-      roomCode: e.target.value,
-    });
-  };
-
-  roomButtonPressed = () => {
+  function roomButtonPressed() {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        code: this.state.roomCode,
+        code: roomCode,
       }),
     };
     fetch("/api/join-room", requestOptions)
       .then((response) => {
         if (response.ok) {
-          this.props.history.push(`/room/${this.state.roomCode}`);
+          props.history.push(`/room/${roomCode}`);
         } else {
-          this.setState({ error: "Room not found." });
+          setError("Room not found.");
         }
       })
       .catch((error) => {
         console.log(error);
       });
-  };
+  }
 }
