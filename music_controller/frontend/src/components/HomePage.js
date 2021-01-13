@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import RoomJoinPage from "./RoomJoinPage";
 import CreateRoomPage from "./CreateRoomPage";
 import Room from "./Room";
@@ -12,25 +12,18 @@ import {
 } from "react-router-dom";
 import Info from "./Info";
 
-export default class HomePage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      roomCode: null,
-    };
-  }
+export default function HomePage(props) {
+  const [roomCode, setRoomCode] = useState(null);
 
-  async componentDidMount() {
+  useEffect(async () => {
     fetch("/api/user-in-room")
       .then((response) => response.json())
       .then((data) => {
-        this.setState({
-          roomCode: data.code,
-        });
+        setRoomCode(data.code);
       });
-  }
+  });
 
-  renderHomePage() {
+  function renderHomePage() {
     return (
       <Grid container spacing={3}>
         <Grid item xs={12} align="center">
@@ -55,38 +48,34 @@ export default class HomePage extends Component {
     );
   }
 
-  clearRoomCode = () => {
-    this.setState({
-      roomCode: null,
-    });
-  };
-
-  render() {
-    return (
-      <Router>
-        <Switch>
-          <Route
-            exact
-            path="/"
-            render={() => {
-              return this.state.roomCode ? (
-                <Redirect to={`/room/${this.state.roomCode}`} />
-              ) : (
-                this.renderHomePage()
-              );
-            }}
-          />
-          <Route path="/join" component={RoomJoinPage} />
-          <Route path="/info" component={Info} />
-          <Route path="/create" component={CreateRoomPage} />
-          <Route
-            path="/room/:roomCode"
-            render={(props) => {
-              return <Room {...props} leaveRoomCallback={this.clearRoomCode} />;
-            }}
-          />
-        </Switch>
-      </Router>
-    );
+  function clearRoomCode() {
+    setRoomCode(null);
   }
+
+  return (
+    <Router>
+      <Switch>
+        <Route
+          exact
+          path="/"
+          render={() => {
+            return roomCode ? (
+              <Redirect to={`/room/${roomCode}`} />
+            ) : (
+              renderHomePage()
+            );
+          }}
+        />
+        <Route path="/join" component={RoomJoinPage} />
+        <Route path="/info" component={Info} />
+        <Route path="/create" component={CreateRoomPage} />
+        <Route
+          path="/room/:roomCode"
+          render={(props) => {
+            return <Room {...props} leaveRoomCallback={clearRoomCode} />;
+          }}
+        />
+      </Switch>
+    </Router>
+  );
 }
