@@ -1,5 +1,5 @@
-
 # Full Stack Web App using Spotify's API
+Referenced from Tech With Tim's React Django Tutorial, but I have edited it to use Functional Components with React Hooks.
 
 ## _Setup Instructions_
 
